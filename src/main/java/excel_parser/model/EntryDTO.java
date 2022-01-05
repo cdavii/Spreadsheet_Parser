@@ -8,18 +8,18 @@ public class EntryDTO {
 
     private String supplier;
     private Date date;
-    private int purchaseOrderNumber;
+    private Integer purchaseOrderNumber;
     private String contract;
     private String invoiceNumberAndDate;
     private String client;
-    private double net;
-    private double vat;
-    private double gross;
+    private Double net;
+    private Double vat;
+    private Double gross;
 
     public EntryDTO(ArrayList<Object> data){
         this.setSupplier(String.valueOf(data.get(0)));
         this.setDate((Date) data.get(1));
-        this.setPurchaseOrderNumber(Double.parseDouble(String.valueOf(data.get(2))));
+        this.setPurchaseOrderNumber(String.valueOf(data.get(2)));
         this.setContract(String.valueOf(data.get(3)));
         this.setInvoiceNumberAndDate((String) data.get(4));
         this.setClient(String.valueOf(data.get(5)));
@@ -48,8 +48,8 @@ public class EntryDTO {
         return purchaseOrderNumber;
     }
 
-    public void setPurchaseOrderNumber(Double purchaseOrderNumber) {
-        this.purchaseOrderNumber = purchaseOrderNumber.intValue();
+    public void setPurchaseOrderNumber(String purchaseOrderNumber) {
+        this.purchaseOrderNumber = Integer.parseInt(purchaseOrderNumber);
     }
 
     public String getContract() {
