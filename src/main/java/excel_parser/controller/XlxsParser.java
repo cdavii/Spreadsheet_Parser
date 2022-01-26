@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class XlxsParser {
@@ -63,7 +64,6 @@ public class XlxsParser {
 
         for (int rn = 1; rn < sheet.getLastRowNum(); rn++) {
             ArrayList<Object> data = new ArrayList<>();
-            int lastColumn = sheet.getRow(rn).getLastCellNum();
             for (int cn = 0; cn < 9; cn++) {
                 Cell cell = sheet.getRow(rn).getCell(cn);
                 switch (cell.getCellType()) {
@@ -71,29 +71,29 @@ public class XlxsParser {
                         data.add(cell.getStringCellValue());
                         break;
                     case NUMERIC:
-                        if (DateUtil.isCellDateFormatted(cell)) data.add(cell.getDateCellValue());
-                        else data.add(cell.getNumericCellValue());
+                        if (DateUtil.isCellDateFormatted(cell))
+                            data.add(new SimpleDateFormat("dd/MM/yyyy").format(cell.getDateCellValue()));
+                        else data.add(String.valueOf(cell.getNumericCellValue()));
                         break;
                     case BLANK:
-                        data.add(null);
+                        data.add("");
                         break;
                 }
             }
             masterList.add(new EntryDTO(data));
         }
-
     }
-
-
 
     public static void main(String[] args) {
 
 
-        createEntryList(getSheet(report));
-        for (EntryDTO entry : listOfEntries) System.out.println(entry.toString());
+//        createEntryList(getSheet(report));
+//        for (EntryDTO entry : listOfEntries) System.out.println(entry.toString());
 
-        //createMasterList(getSheet(master));
+        createMasterList(getSheet(master));
+
         //for (EntryDTO entry : masterList) System.out.println(entry.toString());
+
 
 
     }

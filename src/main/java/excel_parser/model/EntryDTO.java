@@ -7,25 +7,25 @@ import java.util.Date;
 public class EntryDTO {
 
     private String supplier;
-    private Date date;
-    private Integer purchaseOrderNumber;
+    private String date;
+    private String purchaseOrderNumber;
     private String contract;
     private String invoiceNumberAndDate;
     private String client;
-    private Double net;
-    private Double vat;
-    private Double gross;
+    private String net;
+    private String vat;
+    private String gross;
 
     public EntryDTO(ArrayList<Object> data){
         this.setSupplier(String.valueOf(data.get(0)));
-        this.setDate((Date) data.get(1));
+        this.setDate(String.valueOf(data.get(1)));
         this.setPurchaseOrderNumber(String.valueOf(data.get(2)));
         this.setContract(String.valueOf(data.get(3)));
         this.setInvoiceNumberAndDate((String) data.get(4));
         this.setClient(String.valueOf(data.get(5)));
-        this.setNet((double) data.get(6));
-        this.setVat((double) data.get(7));
-        this.setGross((double) data.get(8));
+        this.setNet(String.valueOf(data.get(6)));
+        this.setVat(String.valueOf(data.get(7)));
+        this.setGross(String.valueOf(data.get(8)));
     }
 
     public String getSupplier() {
@@ -36,20 +36,20 @@ public class EntryDTO {
         this.supplier = supplier;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public int getPurchaseOrderNumber() {
+    public String getPurchaseOrderNumber() {
         return purchaseOrderNumber;
     }
 
     public void setPurchaseOrderNumber(String purchaseOrderNumber) {
-        this.purchaseOrderNumber = Integer.parseInt(purchaseOrderNumber);
+        this.purchaseOrderNumber = purchaseOrderNumber;
     }
 
     public String getContract() {
@@ -65,9 +65,7 @@ public class EntryDTO {
     }
 
     public void setInvoiceNumberAndDate(String invoiceNumberAndDate) {
-        if (invoiceNumberAndDate == null) {
-            this.invoiceNumberAndDate = "";
-        }else this.invoiceNumberAndDate = invoiceNumberAndDate;
+        this.invoiceNumberAndDate = invoiceNumberAndDate;
     }
 
     public String getClient() {
@@ -78,34 +76,34 @@ public class EntryDTO {
         this.client = client;
     }
 
-    public double getNet() {
+    public String getNet() {
         return net;
     }
 
-    public void setNet(double net) {
+    public void setNet(String net) {
         this.net = net;
     }
 
-    public double getVat() {
+    public String getVat() {
         return vat;
     }
 
-    public void setVat(double vat) {
+    public void setVat(String vat) {
         this.vat = vat;
     }
 
-    public double getGross() {
+    public String getGross() {
         return gross;
     }
 
-    public void setGross(double gross) {
+    public void setGross(String gross) {
         this.gross = gross;
     }
 
     @Override
     public String toString() {
         return "[" + supplier +
-                ", " + new SimpleDateFormat("dd/MM/yyyy").format(date) +
+                ", " + date +
                 ", " + purchaseOrderNumber +
                 ", " + contract +
                 ", " + invoiceNumberAndDate +
