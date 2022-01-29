@@ -18,8 +18,8 @@ public class XlxsParser {
     private static final ArrayList<EntryDTO> listOfEntries = new ArrayList<>();
     private static final ArrayList<EntryDTO> masterList = new ArrayList<>();
 
-    public static String report = "D:/Callum/Documents/#Programming/Report oct nov21.xlsx";
-    public static String master = "D:/Callum/Documents/#Programming/MASTER.xlsx";
+    public static String report = "src/main/resources/Report oct nov21.xlsx";
+    public static String master = "src/main/resources/MASTER.xlsx";
 
     public static XSSFSheet getSheet(String filepath) {
         XSSFSheet sheet = null;
@@ -87,10 +87,10 @@ public class XlxsParser {
     public static void main(String[] args) {
 
 
-//        createEntryList(getSheet(report));
-//        for (EntryDTO entry : listOfEntries) System.out.println(entry.toString());
+        createEntryList(getSheet(report));
+        for (EntryDTO entry : listOfEntries) System.out.println(entry.toString());
 
-        createMasterList(getSheet(master));
+//        createMasterList(getSheet(master));
 
         //for (EntryDTO entry : masterList) System.out.println(entry.toString());
 
