@@ -14,13 +14,10 @@ import java.util.ArrayList;
 
 public class XlxsParser {
 
-    private static final ArrayList<EntryDTO> listOfEntries = new ArrayList<>();
-    private static final ArrayList<EntryDTO> masterList = new ArrayList<>();
+    public static String report = "src/main/resources/Report oct nov21.xlsx";
+    public static String master = "src/main/resources/MASTER.xlsx";
 
-    public static String report = "D:/Callum/Documents/#Programming/Report oct nov21.xlsx";
-    public static String master = "D:/Callum/Documents/#Programming/MASTER.xlsx";
-
-    public static XSSFSheet getSheet(String filepath) {
+    private static XSSFSheet getSheet(String filepath) {
         XSSFSheet sheet = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(filepath);
@@ -33,7 +30,9 @@ public class XlxsParser {
         return sheet;
     }
 
-    public static void createEntryList(XSSFSheet sheet) {
+    public static ArrayList<EntryDTO> createReportList(String filepath) {
+        XSSFSheet sheet = getSheet(filepath);
+        ArrayList<EntryDTO> reportList = new ArrayList<>();
 
         for (Row row : sheet) {
             ArrayList<Object> data = new ArrayList<>();
@@ -43,7 +42,8 @@ public class XlxsParser {
                 CellType cellType = cell.getCellType();
                 switch (cellType) {
                     case STRING:
-                        data.add(cell.getStringCellValue());
+                        if (cell.getStringCellValue().isBlank()) data.add(null);
+                        else data.add(cell.getStringCellValue());
                         break;
                     case NUMERIC:
                         if (DateUtil.isCellDateFormatted(cell)) data.add(cell.getDateCellValue());
@@ -54,12 +54,14 @@ public class XlxsParser {
                         break;
                 }
             }
-            listOfEntries.add(new EntryDTO(data));
+            reportList.add(new EntryDTO(data));
         }
-
+    return reportList;
     }
 
-    public static void createMasterList(XSSFSheet sheet) {
+    public static ArrayList<EntryDTO> createMasterList(String filepath) {
+        XSSFSheet sheet = getSheet(filepath);
+        ArrayList<EntryDTO> masterList = new ArrayList<>();
 
         for (int rn = 1; rn < sheet.getLastRowNum(); rn++) {
             ArrayList<Object> data = new ArrayList<>();
@@ -68,7 +70,8 @@ public class XlxsParser {
                 Cell cell = sheet.getRow(rn).getCell(cn);
                 switch (cell.getCellType()) {
                     case STRING:
-                        data.add(cell.getStringCellValue());
+                        if (cell.getStringCellValue().isBlank()) data.add(null);
+                        else data.add(cell.getStringCellValue());
                         break;
                     case NUMERIC:
                         if (DateUtil.isCellDateFormatted(cell)) data.add(cell.getDateCellValue());
@@ -81,21 +84,7 @@ public class XlxsParser {
             }
             masterList.add(new EntryDTO(data));
         }
-
-    }
-
-
-
-    public static void main(String[] args) {
-
-
-        createEntryList(getSheet(report));
-        for (EntryDTO entry : listOfEntries) System.out.println(entry.toString());
-
-        //createMasterList(getSheet(master));
-        //for (EntryDTO entry : masterList) System.out.println(entry.toString());
-
-
+    return masterList;
     }
 }
 

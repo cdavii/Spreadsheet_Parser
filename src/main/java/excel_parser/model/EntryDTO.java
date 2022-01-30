@@ -3,6 +3,7 @@ package excel_parser.model;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class EntryDTO {
 
@@ -23,9 +24,9 @@ public class EntryDTO {
         this.setContract(String.valueOf(data.get(3)));
         this.setInvoiceNumberAndDate((String) data.get(4));
         this.setClient(String.valueOf(data.get(5)));
-        this.setNet((double) data.get(6));
-        this.setVat((double) data.get(7));
-        this.setGross((double) data.get(8));
+        this.setNet((Double) data.get(6));
+        this.setVat((Double) data.get(7));
+        this.setGross((Double) data.get(8));
     }
 
     public String getSupplier() {
@@ -49,7 +50,11 @@ public class EntryDTO {
     }
 
     public void setPurchaseOrderNumber(String purchaseOrderNumber) {
-        this.purchaseOrderNumber = Integer.parseInt(purchaseOrderNumber);
+        if (purchaseOrderNumber.contains("null")) {
+            this.purchaseOrderNumber = null;
+        } else {
+            this.purchaseOrderNumber = (int) Double.parseDouble(purchaseOrderNumber);
+        }
     }
 
     public String getContract() {
@@ -65,9 +70,7 @@ public class EntryDTO {
     }
 
     public void setInvoiceNumberAndDate(String invoiceNumberAndDate) {
-        if (invoiceNumberAndDate == null) {
-            this.invoiceNumberAndDate = "";
-        }else this.invoiceNumberAndDate = invoiceNumberAndDate;
+        this.invoiceNumberAndDate = Objects.requireNonNullElse(invoiceNumberAndDate, "");
     }
 
     public String getClient() {
@@ -75,22 +78,23 @@ public class EntryDTO {
     }
 
     public void setClient(String client) {
-        this.client = client;
+            this.client = client;
+
     }
 
     public double getNet() {
         return net;
     }
 
-    public void setNet(double net) {
-        this.net = net;
+    public void setNet(Double net) {
+            this.net = net;
     }
 
     public double getVat() {
         return vat;
     }
 
-    public void setVat(double vat) {
+    public void setVat(Double vat) {
         this.vat = vat;
     }
 
@@ -98,14 +102,14 @@ public class EntryDTO {
         return gross;
     }
 
-    public void setGross(double gross) {
+    public void setGross(Double gross) {
         this.gross = gross;
     }
 
     @Override
     public String toString() {
         return "[" + supplier +
-                ", " + new SimpleDateFormat("dd/MM/yyyy").format(date) +
+                ", " + date +
                 ", " + purchaseOrderNumber +
                 ", " + contract +
                 ", " + invoiceNumberAndDate +
